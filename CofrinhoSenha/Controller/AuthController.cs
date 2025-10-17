@@ -30,7 +30,7 @@ public class AuthController : Microsoft.AspNetCore.Mvc.Controller
         if (user == null)
             return NotFound();
         
-        var valid = _passwordService.VerifyPassword(dto.Password,  user.Password);
+        var valid = _passwordService.VerifyPassword(user.Password,  dto.Password);
         
         if (!valid)
             return Unauthorized();
