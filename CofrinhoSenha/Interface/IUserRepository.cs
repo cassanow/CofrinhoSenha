@@ -6,6 +6,7 @@ public interface IUserRepository
 {
     Task<User> GetUserById(int id);
 
+    Task<User> GetByEmail(string email);
     Task<bool> Exists(int id);
     Task<bool> SaveUser(User user);
     

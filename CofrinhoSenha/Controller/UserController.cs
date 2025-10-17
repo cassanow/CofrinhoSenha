@@ -38,10 +38,9 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
         var user = new User
         {
             Email = dto.Email,
-            Username = dto.Username
+            Username = dto.Username,
+            Password = _passwordService.HashPassword(dto.Password)
         };
-        
-        user.Password = _passwordService.HashPassword(dto.Password);
 
         await _userRepository.SaveUser(user);
         
