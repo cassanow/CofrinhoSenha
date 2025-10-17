@@ -1,4 +1,4 @@
-﻿namespace CofrinhoSenha.Application.DTO;
+﻿namespace CofrinhoSenha.DTO;
 
 public class LoginDTO
 {

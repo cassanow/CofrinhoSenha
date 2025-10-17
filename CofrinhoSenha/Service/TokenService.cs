@@ -1,11 +1,11 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using CofrinhoSenha.Domain.Entity;
+using CofrinhoSenha.Entity;
 using CofrinhoSenha.Interface;
 using Microsoft.IdentityModel.Tokens;
 
-namespace CofrinhoSenha.Infrastructure.Service;
+namespace CofrinhoSenha.Service;
 
 public class TokenService : ITokenService
 {

@@ -1,4 +1,4 @@
-﻿namespace CofrinhoSenha.Infrastructure.Interface;
+﻿namespace CofrinhoSenha.Interface;
 
 public interface IPasswordService
 {

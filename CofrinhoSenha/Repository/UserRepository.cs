@@ -1,9 +1,9 @@
-﻿using CofrinhoSenha.Domain.Entity;
-using CofrinhoSenha.Domain.Interface;
-using CofrinhoSenha.Infrastructure.Data.Context;
+﻿using CofrinhoSenha.Data.Context;
+using CofrinhoSenha.Entity;
+using CofrinhoSenha.Interface;
 using Microsoft.EntityFrameworkCore;
 
-namespace CofrinhoSenha.Infrastructure.Data.Repository;
+namespace CofrinhoSenha.Repository;
 
 public class UserRepository : IUserRepository
 {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CofrinhoSenha.Domain.Entity;
+namespace CofrinhoSenha.Entity;
 
 public class User
 {

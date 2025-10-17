@@ -1,11 +1,9 @@
 using System.Text;
-using CofrinhoSenha.Domain.Interface;
+using CofrinhoSenha.Data.Context;
 using Microsoft.EntityFrameworkCore;
-using CofrinhoSenha.Infrastructure.Data.Context;
-using CofrinhoSenha.Infrastructure.Data.Repository;
-using CofrinhoSenha.Infrastructure.Interface;
-using CofrinhoSenha.Infrastructure.Service;
 using CofrinhoSenha.Interface;
+using CofrinhoSenha.Repository;
+using CofrinhoSenha.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 

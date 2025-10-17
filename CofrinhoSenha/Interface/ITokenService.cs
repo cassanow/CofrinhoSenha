@@ -1,4 +1,4 @@
-﻿using CofrinhoSenha.Domain.Entity;
+﻿using CofrinhoSenha.Entity;
 
 namespace CofrinhoSenha.Interface;
 

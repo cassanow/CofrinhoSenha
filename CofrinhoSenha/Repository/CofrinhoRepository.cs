@@ -1,9 +1,9 @@
-﻿using CofrinhoSenha.Domain.Entity;
-using CofrinhoSenha.Infrastructure.Data.Context;
+﻿using CofrinhoSenha.Data.Context;
+using CofrinhoSenha.Entity;
 using CofrinhoSenha.Interface;
 using Microsoft.EntityFrameworkCore;
 
-namespace CofrinhoSenha.Infrastructure.Data.Repository;
+namespace CofrinhoSenha.Repository;
 
 public class CofrinhoRepository : ICofrinhoRepository
 {
@@ -19,9 +19,9 @@ public class CofrinhoRepository : ICofrinhoRepository
         return await _context.Cofrinho.Where(c => c.Id == id).FirstOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<Cofrinho>> GetAll()
+    public async Task<IEnumerable<Cofrinho>> GetAll(int id)
     {
-        return await _context.Cofrinho.ToListAsync();
+        return await _context.Cofrinho.Where(c => c.UserId == id).ToListAsync();
     }
 
     public async Task<bool> Create(Cofrinho cofrinho)

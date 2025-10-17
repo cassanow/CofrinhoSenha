@@ -1,10 +1,9 @@
-﻿using CofrinhoSenha.Application.DTO;
-using CofrinhoSenha.Domain.Entity;
-using CofrinhoSenha.Domain.Interface;
-using CofrinhoSenha.Infrastructure.Interface;
+﻿using CofrinhoSenha.DTO;
+using CofrinhoSenha.Entity;
+using CofrinhoSenha.Interface;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CofrinhoSenha.API.Controller;
+namespace CofrinhoSenha.Controller;
 
 [Route("cofrinho/[controller]")]
 public class UserController : Microsoft.AspNetCore.Mvc.Controller

@@ -1,7 +1,7 @@
-﻿using CofrinhoSenha.Domain.Entity;
+﻿using CofrinhoSenha.Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace CofrinhoSenha.Infrastructure.Data.Context;
+namespace CofrinhoSenha.Data.Context;
 
 public class AppDbContext : DbContext
 {

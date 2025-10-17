@@ -1,8 +1,8 @@
 ﻿using System.Security.Cryptography;
-using CofrinhoSenha.Infrastructure.Interface;
+using CofrinhoSenha.Interface;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
-namespace CofrinhoSenha.Infrastructure.Service;
+namespace CofrinhoSenha.Service;
 
 public class PasswordService : IPasswordService
 {

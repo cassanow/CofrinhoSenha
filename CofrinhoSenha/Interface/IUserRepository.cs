@@ -1,6 +1,6 @@
-﻿using CofrinhoSenha.Domain.Entity;
+﻿using CofrinhoSenha.Entity;
 
-namespace CofrinhoSenha.Domain.Interface;
+namespace CofrinhoSenha.Interface;
 
 public interface IUserRepository
 {

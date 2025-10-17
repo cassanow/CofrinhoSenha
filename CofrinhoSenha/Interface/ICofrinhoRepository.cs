@@ -1,5 +1,4 @@
-﻿using CofrinhoSenha.Application.DTO;
-using CofrinhoSenha.Domain.Entity;
+﻿using CofrinhoSenha.Entity;
 
 namespace CofrinhoSenha.Interface;
 
@@ -7,7 +6,7 @@ public interface ICofrinhoRepository
 {
     Task<Cofrinho> GetById(int id);
     
-    Task<IEnumerable<Cofrinho>> GetAll();
+    Task<IEnumerable<Cofrinho>> GetAll(int id);
 
     Task<bool> Create(Cofrinho cofrinho);
     
