@@ -1,6 +1,7 @@
 ﻿using CofrinhoSenha.Application.DTO;
 using CofrinhoSenha.Domain.Entity;
 using CofrinhoSenha.Domain.Interface;
+using CofrinhoSenha.Infrastructure.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CofrinhoSenha.API.Controller;
@@ -9,10 +10,12 @@ namespace CofrinhoSenha.API.Controller;
 public class UserController : Microsoft.AspNetCore.Mvc.Controller
 {
     private readonly IUserRepository _userRepository;
+    private readonly IPasswordService _passwordService;
 
-    public UserController(IUserRepository userRepository)
+    public UserController(IUserRepository userRepository,  IPasswordService passwordService)
     {
         _userRepository = userRepository;
+        _passwordService = passwordService;
     }
     
     [HttpGet("GetById/{id:int}")]
@@ -35,9 +38,10 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
         var user = new User
         {
             Email = dto.Email,
-            Password = dto.Password,
             Username = dto.Username
         };
+        
+        user.Password = _passwordService.HashPassword(dto.Password);
 
         await _userRepository.SaveUser(user);
         

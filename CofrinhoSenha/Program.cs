@@ -2,6 +2,8 @@ using CofrinhoSenha.Domain.Interface;
 using Microsoft.EntityFrameworkCore;
 using CofrinhoSenha.Infrastructure.Data.Context;
 using CofrinhoSenha.Infrastructure.Data.Repository;
+using CofrinhoSenha.Infrastructure.Interface;
+using CofrinhoSenha.Infrastructure.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite(builder.Configurati
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPasswordService, PasswordService>();
 
 var app = builder.Build();
 
