@@ -9,8 +9,6 @@ public class PasswordValidation
     
     public string Password { get; set; }
     
-    public int UserId { get; set; }
-    
     public bool IsValid { get; set; }
     
     public int Score { get; set; }

@@ -9,5 +9,4 @@ public class AppDbContext : DbContext
     
     public DbSet<PasswordValidation> Password { get; set; }
     
-    public DbSet<User> User { get; set; }
 }
