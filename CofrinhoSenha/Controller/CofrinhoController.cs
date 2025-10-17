@@ -2,12 +2,14 @@
 using CofrinhoSenha.DTO;
 using CofrinhoSenha.Entity;
 using CofrinhoSenha.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CofrinhoSenha.Controller;
 
 [Route("cofrinho/[controller]")]
 [ApiController]
+[Authorize]
 public class CofrinhoController : Microsoft.AspNetCore.Mvc.Controller
 {
     private readonly ICofrinhoRepository _cofrinhoRepository;
@@ -87,7 +89,7 @@ public class CofrinhoController : Microsoft.AspNetCore.Mvc.Controller
         
         await _cofrinhoRepository.Update(cofrinho);
         
-        return Ok(dto);
+        return Ok(new {nome = cofrinho.Nome, UserId = userId});
     }
 
     [HttpDelete("Delete/{id:int}")]
