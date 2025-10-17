@@ -2,6 +2,7 @@
 using CofrinhoSenha.Domain.Entity;
 using CofrinhoSenha.Domain.Interface;
 using CofrinhoSenha.Infrastructure.Interface;
+using CofrinhoSenha.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CofrinhoSenha.API.Controller;
@@ -12,11 +13,13 @@ public class AuthController : Microsoft.AspNetCore.Mvc.Controller
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordService  _passwordService;
+    private readonly ITokenService _tokenService;
 
-    public AuthController(IUserRepository userRepository, IPasswordService passwordService)
+    public AuthController(IUserRepository userRepository, IPasswordService passwordService,  ITokenService tokenService)
     {
         _userRepository = userRepository;
         _passwordService = passwordService;
+        _tokenService = tokenService;
     }
 
     [HttpPost("Login")]
@@ -35,7 +38,9 @@ public class AuthController : Microsoft.AspNetCore.Mvc.Controller
         if(user.Password != dto.Password && user.Email != dto.Email)
             return Unauthorized();
         
-        return Ok();
+        var token = _tokenService.GenerateToken(user);
+        
+        return Ok(new { token = token, username = user.Username });
     }
 
     [HttpPost("Register")]
