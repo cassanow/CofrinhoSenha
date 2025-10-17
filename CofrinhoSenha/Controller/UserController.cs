@@ -44,7 +44,7 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
 
         await _userRepository.SaveUser(user);
         
-        return Ok(user);
+        return Ok(dto);
     }
 
     [HttpPut("Update/{id:int}")]
@@ -56,7 +56,7 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
             return NotFound();
         
         user.Email = dto.Email;
-        user.Password = dto.Password;
+        user.Password = _passwordService.HashPassword(dto.Password);
         user.Username = dto.Username;
 
         await _userRepository.UpdateUser(user);

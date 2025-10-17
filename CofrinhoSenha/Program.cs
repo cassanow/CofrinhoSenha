@@ -5,6 +5,7 @@ using CofrinhoSenha.Infrastructure.Data.Context;
 using CofrinhoSenha.Infrastructure.Data.Repository;
 using CofrinhoSenha.Infrastructure.Interface;
 using CofrinhoSenha.Infrastructure.Service;
+using CofrinhoSenha.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -21,6 +22,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
