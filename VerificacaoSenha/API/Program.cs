@@ -1,5 +1,4 @@
-using Microsoft.EntityFrameworkCore;
-using VerificacaoSenha.Infrastructure.Data.Context;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,8 +6,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-
-builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
@@ -19,7 +16,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 
 
 app.Run();
