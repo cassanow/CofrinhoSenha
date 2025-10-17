@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerificacaoSenha", "VerificacaoSenha\VerificacaoSenha.csproj", "{C0134C58-40CF-4AE0-8889-DBFFCD47AAD3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CofrinhoSenha", "CofrinhoSenha\CofrinhoSenha.csproj", "{C0134C58-40CF-4AE0-8889-DBFFCD47AAD3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

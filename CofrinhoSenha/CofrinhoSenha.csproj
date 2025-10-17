@@ -21,4 +21,8 @@
       <Folder Include="Infrastructure\Service\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Domain\Entity\ValidPasswordResponse.cs" />
+    </ItemGroup>
+
 </Project>
