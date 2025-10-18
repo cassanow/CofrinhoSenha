@@ -10,4 +10,6 @@ public class AppDbContext : DbContext
     public DbSet<User> User { get; set; }
     
     public DbSet<Cofrinho> Cofrinho{ get; set; }
+    
+    public DbSet<Password> Password { get; set; }
 }

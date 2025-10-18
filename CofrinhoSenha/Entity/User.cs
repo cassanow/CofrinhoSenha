@@ -13,4 +13,5 @@ public class User
     
     public string Password { get; set; }
     
+    public ICollection<Cofrinho> Cofrinhos { get; set; }
 }
