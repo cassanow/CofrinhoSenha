@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CofrinhoSenha.Controller;
 
 [Route("cofrinho/[controller]")]
+[ApiController]
 public class UserController : Microsoft.AspNetCore.Mvc.Controller
 {
     private readonly IUserRepository _userRepository;
