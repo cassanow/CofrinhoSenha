@@ -21,7 +21,7 @@ public class CofrinhoRepository : ICofrinhoRepository
 
     public async Task<IEnumerable<Cofrinho>> GetAll(int id)
     {
-        return await _context.Cofrinho.Where(c => c.UserId == id).ToListAsync();
+        return await _context.Cofrinho.Where(c => c.UserId == id).Include(c => c.Passwords).ToListAsync();
     }
 
     public async Task<bool> Create(Cofrinho cofrinho)

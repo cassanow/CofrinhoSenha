@@ -9,6 +9,12 @@ namespace CofrinhoSenha.Service;
 public class PasswordService : IPasswordService
 {
     private readonly Random _random =  new Random();
+    private readonly AppDbContext _context;
+
+    public PasswordService(AppDbContext context)
+    {
+        _context = context;
+    }
     
     public string HashPassword(string password)  
     {  
@@ -42,7 +48,7 @@ public class PasswordService : IPasswordService
         return savedHash == computedHash;  
     }
 
-    public string GenerateStrongPassword(GeneratePasswordRequest request)
+    public Password GenerateStrongPassword(GeneratePasswordRequest request, int cofrinhoId)
     {
         var chars = "";
 
@@ -68,6 +74,17 @@ public class PasswordService : IPasswordService
             password[i] = chars[_random.Next(chars.Length)];
         }
         
-        return new string(password);
+        var senhaGerada = new string(password);
+
+        var passwordEntity = new Password
+        {
+            Nome = senhaGerada,
+            CofrinhoId = cofrinhoId,
+        };
+        
+        _context.Password.Add(passwordEntity);
+        _context.SaveChanges();
+        
+        return passwordEntity;
     }
 }

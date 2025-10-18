@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using CofrinhoSenha.Data.Context;
 using CofrinhoSenha.Entity;
 using CofrinhoSenha.Interface;
 using Microsoft.AspNetCore.Authorization;
@@ -12,17 +13,32 @@ namespace CofrinhoSenha.Controller;
 public class PasswordController : Microsoft.AspNetCore.Mvc.Controller
 {
     private readonly IPasswordService _passwordService;
+    private readonly AppDbContext _context;
 
-    public PasswordController(IPasswordService passwordService)
+    public PasswordController(IPasswordService passwordService,  AppDbContext context)
     {
         _passwordService = passwordService;
+        _context = context;
     }
     
     [HttpPost("Generate")]
     public IActionResult Generate([FromBody] GeneratePasswordRequest request)
     {
-        var password = _passwordService.GenerateStrongPassword(request);
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
         
-        return Ok(new { password });
+        var cofrinho = _context.Cofrinho
+            .FirstOrDefault(c => c.Id == request.CofrinhoId && c.UserId == userId);
+        
+        if (cofrinho == null)
+            return BadRequest();
+        
+        var password = _passwordService.GenerateStrongPassword(request, cofrinho.Id);
+        
+        return Ok(new 
+        { 
+            senha = password.Nome,
+            cofrinhoId = password.CofrinhoId,
+            cofrinhoNome = cofrinho.Nome
+        });
     }
 }
