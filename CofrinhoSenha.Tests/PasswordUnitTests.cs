@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CofrinhoSenha.Tests;
 
-public class PasswordTests
+public class PasswordUnitTests
 {
     [Fact]
     public void DeveRetornarTrueSeASenhaEstiverCorreta()
