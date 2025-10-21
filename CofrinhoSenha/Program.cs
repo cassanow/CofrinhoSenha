@@ -13,8 +13,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-
-builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+if (!builder.Environment.IsEnvironment("Test"))
+{
+    builder.Services.AddDbContext<AppDbContext>(o =>
+        o.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
 
 builder.Services.AddControllers();
 
@@ -22,6 +25,9 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICofrinhoRepository, CofrinhoRepository>();
+
+var key = Encoding.ASCII.GetBytes("chave-super-secreta-teste1234567890"); // 32+ chars
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -54,3 +60,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
