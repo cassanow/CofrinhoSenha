@@ -1,16 +1,13 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using System.Net.Http.Headers;
+﻿using System.Net;
 using System.Net.Http.Json;
-using System.Security.Claims;
-using System.Text;
 using CofrinhoSenha.Data.Context;
-using CofrinhoSenha.Entity;
+using CofrinhoSenha.DTO;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 
 namespace CofrinhoSenha.Tests;
@@ -23,6 +20,16 @@ public class PasswordIntegrationTests : IClassFixture<CustomWebApplicationFactor
     public PasswordIntegrationTests(CustomWebApplicationFactory<Program> factory)
     {
         _factory = factory;
+        
+        _factory.WithWebHostBuilder(builder =>
+        {
+            builder.ConfigureServices(services =>
+            {
+                services.AddAuthentication("Test")
+                    .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("Test", options => { });
+            });
+        });
+        
         _client = factory.CreateClient(new WebApplicationFactoryClientOptions
         {
             AllowAutoRedirect = false,
@@ -30,6 +37,27 @@ public class PasswordIntegrationTests : IClassFixture<CustomWebApplicationFactor
             HandleCookies = false,
             MaxAutomaticRedirections = 7
         });
+
+        using var scope = _factory.Services.CreateScope();
+        var dbFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<AppDbContext>>();
+        using var context = dbFactory.CreateDbContext();
+        context.Database.EnsureCreated();
     }
-    
+
+
+    [Fact]
+    public async Task DeveRetornarOkSeRegisterBemSucedido()
+    {
+        var dto = new
+        {
+            Username = "arthur",
+            Email = "arthur@gmail.com",
+            Password = "santosfc"
+        };
+        
+        var response = await _client.PostAsJsonAsync("/cofrinho/Auth/Register/", dto);
+        
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        
+    }
 }

@@ -15,31 +15,24 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
     {
         builder.ConfigureServices(services =>
         {
-            var dbContextDescriptor = services.SingleOrDefault(d => d.ServiceType ==
-                                                                    typeof(IDbContextOptionsConfiguration<
-                                                                        AppDbContext>));
+            var dbContextDescriptor = services.SingleOrDefault(
+                d => d.ServiceType ==
+                     typeof(DbContextOptions<AppDbContext>));
 
             services.Remove(dbContextDescriptor);
             
-            var dbConnectionDescriptor = services.SingleOrDefault(
-                d => d.ServiceType == 
-                     typeof(DbConnection));
-            
-            services.Remove(dbConnectionDescriptor);
-            
-            services.AddSingleton<DbConnection>(container =>
-            {
-                var connection = new SqliteConnection("DataSource=:memory:");
-                connection.Open();  
-                
-                return connection;
-            });
+            var dbContextFactoryDescriptor = services.SingleOrDefault(
+                d => d.ServiceType == typeof(IDbContextFactory<AppDbContext>));
 
-            services.AddDbContextFactory<AppDbContext>((container, options) =>
-            {
-                var connection = container.GetRequiredService<DbConnection>();
-                options.UseSqlite(connection);
-            });
+            services.Remove(dbContextFactoryDescriptor);
+
+            var connection = new SqliteConnection("DataSource=:memory:");
+            connection.Open();
+
+            services.AddDbContextFactory<AppDbContext>(
+                options => options.UseSqlite(connection),
+                ServiceLifetime.Scoped  
+            );
         });
         
         builder.UseEnvironment("Development");
