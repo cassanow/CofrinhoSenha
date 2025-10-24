@@ -26,14 +26,14 @@ public class AuthController : Microsoft.AspNetCore.Mvc.Controller
         var user = await _userRepository.GetByEmail(dto.Email);
         
         if (user == null)
-            return NotFound();
+            return Unauthorized();
         
         var valid = _passwordService.VerifyPassword(user.Password,  dto.Password);
         
         if (!valid)
             return Unauthorized();
         
-        if(user.Password != dto.Password && user.Email != dto.Email)
+        if(user.Password != dto.Password)
             return Unauthorized();
         
         var token = _tokenService.GenerateToken(user);

@@ -74,4 +74,27 @@ public class PasswordIntegrationTests : IClassFixture<CustomWebApplicationFactor
         Assert.Contains("token", json.ToLower());
         Assert.Contains("username", json.ToLower());
     }
+    
+    [Fact]
+    public async Task DeveRetornarUnauthorizedSeEmailNaoForEncontrado()
+    {
+        
+        var registerDto = new User
+        {
+            Username = "arthur",
+            Email = "arthur@gmail.com",
+            Password = "santosfc"
+        };
+        await _client.PostAsJsonAsync("/cofrinho/Auth/Register/", registerDto);
+        
+        var loginDto = new
+        {
+            Email = "ferrari@gmail.com",
+            Password = "santosfc"
+        };
+        
+        var response = await _client.PostAsJsonAsync("/cofrinho/Auth/Login", loginDto);
+        
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
 }
