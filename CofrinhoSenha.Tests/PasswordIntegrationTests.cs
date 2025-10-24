@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using CofrinhoSenha.Data.Context;
 using CofrinhoSenha.DTO;
+using CofrinhoSenha.Entity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -59,5 +60,28 @@ public class PasswordIntegrationTests : IClassFixture<CustomWebApplicationFactor
         
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         
+    }
+
+    [Fact]
+    public async Task DeveRetornarOkSeLoginBemSucedido()
+    {
+        
+        var registerDto = new User
+        {
+            Username = "arthur",
+            Email = "arthur@gmail.com",
+            Password = "santosfc"
+        };
+        await _client.PostAsJsonAsync("/cofrinho/Auth/Register/", registerDto);
+        
+        var loginDto = new
+        {
+            Email = "arthur@gmail.com",
+            Password = "santosfc"
+        };
+        
+        var response = await _client.PostAsJsonAsync("/cofrinho/Auth/Login", loginDto);
+        
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 }
