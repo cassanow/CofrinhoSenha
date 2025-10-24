@@ -97,4 +97,28 @@ public class PasswordIntegrationTests : IClassFixture<CustomWebApplicationFactor
         
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
     }
+ 
+
+    [Fact]
+    public async Task DeveRetornarBadRequestSeEmailForInvalido()
+    {
+        var registerDto = new User
+        {
+            Username = "arthur",
+            Email = "arthurgmail.com",
+            Password = "santosfc"
+        };
+        var responseRegister = await _client.PostAsJsonAsync("/cofrinho/Auth/Register/", registerDto);
+        
+        var loginDto = new
+        {
+            Email = "ferrarigmail.com",
+            Password = "santosfc"
+        };
+        
+        var response = await _client.PostAsJsonAsync("/cofrinho/Auth/Login", loginDto);
+        
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.Equal(HttpStatusCode.BadRequest, responseRegister.StatusCode);
+    }
 }
