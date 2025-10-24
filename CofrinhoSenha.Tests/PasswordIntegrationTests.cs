@@ -4,6 +4,7 @@ using CofrinhoSenha.Data.Context;
 using CofrinhoSenha.DTO;
 using CofrinhoSenha.Entity;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,26 +45,9 @@ public class PasswordIntegrationTests : IClassFixture<CustomWebApplicationFactor
         using var context = dbFactory.CreateDbContext();
         context.Database.EnsureCreated();
     }
-
-
+    
     [Fact]
-    public async Task DeveRetornarOkSeRegisterBemSucedido()
-    {
-        var dto = new
-        {
-            Username = "arthur",
-            Email = "arthur@gmail.com",
-            Password = "santosfc"
-        };
-        
-        var response = await _client.PostAsJsonAsync("/cofrinho/Auth/Register/", dto);
-        
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        
-    }
-
-    [Fact]
-    public async Task DeveRetornarOkSeLoginBemSucedido()
+    public async Task DeveRetornarOkSeRegisterELoginBemSucedidoESeMeRetonarOTokenEUsername()
     {
         
         var registerDto = new User
@@ -72,7 +56,7 @@ public class PasswordIntegrationTests : IClassFixture<CustomWebApplicationFactor
             Email = "arthur@gmail.com",
             Password = "santosfc"
         };
-        await _client.PostAsJsonAsync("/cofrinho/Auth/Register/", registerDto);
+        var responseRegister = await _client.PostAsJsonAsync("/cofrinho/Auth/Register/", registerDto);
         
         var loginDto = new
         {
@@ -80,8 +64,14 @@ public class PasswordIntegrationTests : IClassFixture<CustomWebApplicationFactor
             Password = "santosfc"
         };
         
-        var response = await _client.PostAsJsonAsync("/cofrinho/Auth/Login", loginDto);
+        var responseLogin = await _client.PostAsJsonAsync("/cofrinho/Auth/Login", loginDto);
         
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, responseLogin.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, responseRegister.StatusCode);
+        
+        var json =  await responseLogin.Content.ReadAsStringAsync();
+        Assert.NotEmpty(json);
+        Assert.Contains("token", json.ToLower());
+        Assert.Contains("username", json.ToLower());
     }
 }
