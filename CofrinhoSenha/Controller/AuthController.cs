@@ -33,7 +33,7 @@ public class AuthController : Microsoft.AspNetCore.Mvc.Controller
         if (!valid)
             return Unauthorized();
         
-        if(user.Password != dto.Password)
+        if(user.Password != dto.Password && user.Email != dto.Email)
             return Unauthorized();
         
         var token = _tokenService.GenerateToken(user);
