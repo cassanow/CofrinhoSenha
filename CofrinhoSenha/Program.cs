@@ -16,7 +16,7 @@ builder.Services.AddOpenApi();
 if (!builder.Environment.IsEnvironment("Development"))
 {
     builder.Services.AddDbContext<AppDbContext>(o =>
-        o.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+        o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 }
 
 builder.Services.AddControllers();
