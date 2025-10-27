@@ -1,16 +1,11 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using CofrinhoSenha.Data.Context;
-using CofrinhoSenha.DTO;
 using CofrinhoSenha.Entity;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using JsonSerializer = System.Text.Json.JsonSerializer;
-
 
 namespace CofrinhoSenha.Tests;
 
@@ -54,14 +49,14 @@ public class PasswordIntegrationTests : IClassFixture<CustomWebApplicationFactor
         {
             Username = "arthur",
             Email = "arthur@gmail.com",
-            Password = "santosfc"
+            Password = "santosfc1912!"
         };
         var responseRegister = await _client.PostAsJsonAsync("/cofrinho/Auth/Register/", registerDto);
         
         var loginDto = new
         {
             Email = "arthur@gmail.com",
-            Password = "santosfc"
+            Password = "santosfc1912!"
         };
         
         var responseLogin = await _client.PostAsJsonAsync("/cofrinho/Auth/Login", loginDto);
@@ -83,14 +78,14 @@ public class PasswordIntegrationTests : IClassFixture<CustomWebApplicationFactor
         {
             Username = "arthur",
             Email = "arthur@gmail.com",
-            Password = "santosfc"
+            Password = "santosfc1912!"
         };
         await _client.PostAsJsonAsync("/cofrinho/Auth/Register/", registerDto);
         
         var loginDto = new
         {
             Email = "ferrari@gmail.com",
-            Password = "santosfc"
+            Password = "santosfc1912!"
         };
         
         var response = await _client.PostAsJsonAsync("/cofrinho/Auth/Login", loginDto);
@@ -106,14 +101,14 @@ public class PasswordIntegrationTests : IClassFixture<CustomWebApplicationFactor
         {
             Username = "arthur",
             Email = "arthur@gmail.com",
-            Password = "santosfc"
+            Password = "santosfc1912!"
         };
         await _client.PostAsJsonAsync("/cofrinho/Auth/Register/", registerDto);
         
         var loginDto = new
         {
             Email = "arthur@gmail.com",
-            Password = "ferrari"
+            Password = "ferrari2008"
         };
         
         var response = await _client.PostAsJsonAsync("/cofrinho/Auth/Login", loginDto);
@@ -128,19 +123,44 @@ public class PasswordIntegrationTests : IClassFixture<CustomWebApplicationFactor
         {
             Username = "arthur",
             Email = "arthurgmail.com",
-            Password = "santosfc"
+            Password = "santosfc1912!"
         };
         var responseRegister = await _client.PostAsJsonAsync("/cofrinho/Auth/Register/", registerDto);
         
         var loginDto = new
         {
             Email = "ferrarigmail.com",
-            Password = "santosfc"
+            Password = "santosfc1912!"
         };
         
         var response = await _client.PostAsJsonAsync("/cofrinho/Auth/Login", loginDto);
         
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         Assert.Equal(HttpStatusCode.BadRequest, responseRegister.StatusCode);
+    }
+
+    [Fact]
+    public async Task DeveRetornarBadRequestSeASenhaForMenorQue10OuMaiorQue50()
+    {
+        var usuario1 = new User
+        {
+            Username = "arthur",
+            Email = "arthur@gmail.com",
+            Password = "santosfc"
+        };
+        
+        var usuario2 = new User
+        {
+            Username = "arthur",
+            Email = "arthur@gmail.com",
+            Password = "123456890123456890123456890123456890123456898686868688668"
+        };
+        
+        var response1 = await _client.PostAsJsonAsync("/cofrinho/Auth/Register/", usuario1);
+        var response2 = await _client.PostAsJsonAsync("/cofrinho/Auth/Register/", usuario2);
+        
+        
+        Assert.Equal(HttpStatusCode.BadRequest, response1.StatusCode);
+        Assert.Equal(HttpStatusCode.BadRequest, response2.StatusCode);
     }
 }
