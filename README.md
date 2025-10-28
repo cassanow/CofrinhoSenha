@@ -9,6 +9,7 @@ API para gerenciamento seguro de senhas através de cofres personalizados.
 - SQL Server
 - JWT Authentication
 - SOLID & Clean Code
+- xUnit
 
 ## ⚡ Features
 
@@ -30,21 +31,7 @@ dotnet ef database update
 dotnet run
 ```
 
-## 📌 Endpoints
-```
-POST   /api/auth/register
-POST   /api/auth/login
-GET    /api/vaults
-POST   /api/vaults
-GET    /api/passwords
-POST   /api/passwords
-```
-
 ## 🧪 Testes
 ```bash
 dotnet test
 ```
-
-## 📝 Licença
-
-MIT
