@@ -9,5 +9,6 @@ public class UserDTO
     [EmailAddress]
     public string Email { get; set; }
     
+    [MinLength(10), MaxLength(50)]
     public string Password { get; set; }
 }
