@@ -4,9 +4,11 @@ using CofrinhoSenha.Entity;
 using CofrinhoSenha.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace CofrinhoSenha.Controller;
 
+[EnableRateLimiting("sliding")]
 [Route("cofrinho/[controller]")]
 [ApiController]
 [Authorize]
