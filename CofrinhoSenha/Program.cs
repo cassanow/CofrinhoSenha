@@ -49,11 +49,22 @@ builder.Services.AddRateLimiter(options =>
     options.AddSlidingWindowLimiter("sliding", o =>
     {
         o.PermitLimit = 3;
-        o.Window = TimeSpan.FromMinutes(1);
-        o.SegmentsPerWindow = 6;
-        o.QueueLimit = 3;
+        o.Window = TimeSpan.FromSeconds(30);
+        o.QueueLimit = 0;
     });
 });
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddSlidingWindowLimiter("login", o =>
+    {
+        o.PermitLimit = 5;
+        o.Window = TimeSpan.FromMinutes(1);
+        o.QueueLimit = 0;
+    });
+});
+
+
 
 var app = builder.Build();
 
