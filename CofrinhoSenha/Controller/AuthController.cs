@@ -2,9 +2,11 @@
 using CofrinhoSenha.Entity;
 using CofrinhoSenha.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace CofrinhoSenha.Controller;
 
+[EnableRateLimiting("login")]
 [Route("cofrinho/[controller]")]
 [ApiController]
 public class AuthController : Microsoft.AspNetCore.Mvc.Controller
