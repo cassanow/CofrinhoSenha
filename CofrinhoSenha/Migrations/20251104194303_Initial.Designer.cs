@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CofrinhoSenha.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251103205545_Initial")]
+    [Migration("20251104194303_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
