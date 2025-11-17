@@ -51,6 +51,7 @@ builder.Services.AddRateLimiter(options =>
         o.PermitLimit = 3;
         o.Window = TimeSpan.FromSeconds(30);
         o.QueueLimit = 0;
+        o.SegmentsPerWindow = 4;
     });
 });
 
@@ -61,6 +62,7 @@ builder.Services.AddRateLimiter(options =>
         o.PermitLimit = 5;
         o.Window = TimeSpan.FromMinutes(1);
         o.QueueLimit = 0;
+        o.SegmentsPerWindow = 4;
     });
 });
 
